@@ -107,8 +107,10 @@
                 <!-- Video Column (Moved to Right, removed glass-panel) -->
                 <div class="video-container">
                     <video id="routeVideo" controls autoplay loop muted playsinline preload="metadata">
+                        <!-- Prioritize MP4 for better compatibility -->
+                        <source src="2025-12-29 21-04-06.mp4" type="video/mp4">
+                        <!-- Fallback for MOV -->
                         <source src="2025-12-29 21-04-06.MOV" type="video/quicktime">
-                        <source src="2025-12-29 21-04-06.MOV.mp4" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
                 </div>

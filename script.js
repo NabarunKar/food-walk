@@ -26,6 +26,12 @@ function updateCountdown() {
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
+// Ensure video is muted programmatically
+const video = document.getElementById('routeVideo');
+if (video) {
+    video.muted = true;
+}
+
 // Carousel Logic
 const track = document.querySelector('.carousel-track');
 let slides = Array.from(track.children);
