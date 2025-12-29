@@ -156,3 +156,60 @@ if (playAdviceBtn) {
         }
     });
 }
+
+// Food Confetti on Scroll
+const foodEmojis = [
+    '🍔', '🍕', '🌭', '🍟',
+    '🍗', '🍖', '🥩', '🥓',
+    '🍜', '🍝', '🍛', '🍲',
+    '🥟', '🥠', '🥡',
+    '🌮', '🌯', '🥙',
+    '🍣', '🍤', '🦐',
+    '🥪', '🥖', '🥨',
+    '🧀', '🧈', '🥚',
+    '🍩', '🍪', '🍰', '🧁',
+    '🍫', '🍬', '🍭',
+    '🍮', '🍨', '🍦',
+    '🍎', '🍌', '🍉', '🍓',
+    '🍍', '🍊', '🥭',
+    '🥤', '🧃', '☕'
+];
+
+let lastScrollY = window.scrollY;
+let scrollAccumulator = 0;
+const scrollThreshold = 150; // Trigger every 150px scrolled
+
+window.addEventListener('scroll', () => {
+    const currentScrollY = window.scrollY;
+    const delta = Math.abs(currentScrollY - lastScrollY);
+    scrollAccumulator += delta;
+    lastScrollY = currentScrollY;
+
+    if (scrollAccumulator > scrollThreshold) {
+        scrollAccumulator = 0;
+        createFoodConfetti();
+    }
+});
+
+function createFoodConfetti() {
+    const confettiCount = 3; // Number of emojis per burst
+    
+    for (let i = 0; i < confettiCount; i++) {
+        const emoji = foodEmojis[Math.floor(Math.random() * foodEmojis.length)];
+        const el = document.createElement('div');
+        el.textContent = emoji;
+        el.classList.add('food-confetti');
+        
+        // Random positioning and animation properties
+        el.style.left = Math.random() * 100 + 'vw';
+        el.style.animationDuration = (Math.random() * 3 + 2) + 's'; // 2-5s fall duration
+        el.style.fontSize = (Math.random() * 20 + 20) + 'px'; // 20-40px size
+        
+        document.body.appendChild(el);
+        
+        // Remove element after animation ends to keep DOM clean
+        el.addEventListener('animationend', () => {
+            el.remove();
+        });
+    }
+}
