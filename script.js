@@ -114,3 +114,45 @@ setInterval(() => {
         moveToSlide(currentSlideIndex + 1);
     }
 }, 5000);
+
+// Random Advice Audio Logic
+const playAdviceBtn = document.getElementById('playAdviceBtn');
+const audioPlayer = new Audio();
+const totalAdviceFiles = 8; // Updated to 8 files
+// Initialize array [1, 2, ... 8]
+let availableIndices = Array.from({length: totalAdviceFiles}, (_, i) => i + 1);
+
+if (playAdviceBtn) {
+    playAdviceBtn.addEventListener('click', () => {
+        // Stop current if playing
+        if (!audioPlayer.paused) {
+            audioPlayer.pause();
+            audioPlayer.currentTime = 0;
+        }
+
+        // If all files have been played, reset the list to allow a new cycle
+        if (availableIndices.length === 0) {
+            availableIndices = Array.from({length: totalAdviceFiles}, (_, i) => i + 1);
+        }
+
+        // Pick a random position from the available indices
+        const randomIndexPosition = Math.floor(Math.random() * availableIndices.length);
+        const fileIndex = availableIndices[randomIndexPosition];
+        
+        // Remove the chosen index from the list so it doesn't play again this session/cycle
+        availableIndices.splice(randomIndexPosition, 1);
+
+        // Try opus format
+        const audioPath = `Resources/Audio/${fileIndex}.opus`;
+        audioPlayer.src = audioPath;
+        
+        const playPromise = audioPlayer.play();
+        
+        if (playPromise !== undefined) {
+            playPromise.catch(error => {
+                console.log("Audio playback error (file might not exist):", error);
+                console.log(`Tried playing: ${audioPath}`);
+            });
+        }
+    });
+}
