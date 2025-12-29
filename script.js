@@ -1,6 +1,7 @@
 // Countdown Timer
 function updateCountdown() {
-    const eventDate = new Date('December 30, 2025 00:00:00').getTime();
+    // Set to December 30, 2025 at 16:00:00 (4 PM) IST (UTC+05:30)
+    const eventDate = new Date('2025-12-30T16:00:00+05:30').getTime();
     const now = new Date().getTime();
     const distance = eventDate - now;
 
@@ -8,7 +9,7 @@ function updateCountdown() {
         document.getElementById('hours').textContent = '00';
         document.getElementById('minutes').textContent = '00';
         document.getElementById('seconds').textContent = '00';
-        document.querySelector('.countdown-section h2').textContent = 'The Adventure Has Begun! 🎉';
+        document.querySelector('.countdown-section h2').textContent = 'The Adventure Has Begun';
         return;
     }
 
@@ -25,18 +26,6 @@ function updateCountdown() {
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
-// Video play animation
-const video = document.getElementById('routeVideo');
-if (video) {
-    video.addEventListener('play', () => {
-        video.parentElement.style.transform = 'scale(1.02)';
-    });
-    
-    video.addEventListener('pause', () => {
-        video.parentElement.style.transform = 'scale(1)';
-    });
-}
-
 // Smooth scroll animation for journey cards
 const observerOptions = {
     threshold: 0.1,
@@ -52,9 +41,10 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, observerOptions);
 
-document.querySelectorAll('.journey-card').forEach(card => {
+document.querySelectorAll('.journey-card').forEach((card, index) => {
     card.style.opacity = '0';
-    card.style.transform = 'translateY(30px)';
-    card.style.transition = 'all 0.6s ease';
+    card.style.transform = 'translateY(20px)';
+    // Add slight delay for staggered effect
+    card.style.transition = `all 0.6s ease ${index * 0.1}s`;
     observer.observe(card);
 });
