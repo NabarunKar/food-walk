@@ -26,25 +26,91 @@ function updateCountdown() {
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
-// Smooth scroll animation for journey cards
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
+// Carousel Logic
+const track = document.querySelector('.carousel-track');
+let slides = Array.from(track.children);
+const nextButton = document.querySelector('.next-btn');
+const prevButton = document.querySelector('.prev-btn');
+const dotsContainer = document.querySelector('.carousel-dots');
 
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-        }
-    });
-}, observerOptions);
+// Clone first and last slides for infinite loop effect
+const firstClone = slides[0].cloneNode(true);
+const lastClone = slides[slides.length - 1].cloneNode(true);
 
-document.querySelectorAll('.journey-card').forEach((card, index) => {
-    card.style.opacity = '0';
-    card.style.transform = 'translateY(20px)';
-    // Add slight delay for staggered effect
-    card.style.transition = `all 0.6s ease ${index * 0.1}s`;
-    observer.observe(card);
+firstClone.id = 'first-clone';
+lastClone.id = 'last-clone';
+
+track.append(firstClone);
+track.prepend(lastClone);
+
+// Re-query slides to include clones
+const allSlides = document.querySelectorAll('.carousel-slide');
+
+let currentSlideIndex = 1; // Start at 1 because 0 is lastClone
+let isTransitioning = false;
+
+// Create dots (based on original slides count)
+slides.forEach((_, index) => {
+    const dot = document.createElement('div');
+    dot.classList.add('dot');
+    if (index === 0) dot.classList.add('active');
+    dot.addEventListener('click', () => moveToSlide(index + 1)); // +1 offset for clones
+    dotsContainer.appendChild(dot);
 });
+
+const dots = Array.from(dotsContainer.children);
+
+// Set initial position
+track.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
+
+function updateDots(index) {
+    dots.forEach(dot => dot.classList.remove('active'));
+    // Adjust index for dots (0-based) from slide index (1-based with clones)
+    let dotIndex = index - 1;
+    if (dotIndex < 0) dotIndex = slides.length - 1;
+    if (dotIndex >= slides.length) dotIndex = 0;
+    
+    if(dots[dotIndex]) dots[dotIndex].classList.add('active');
+}
+
+function moveToSlide(index) {
+    if (isTransitioning) return;
+    isTransitioning = true;
+    
+    track.style.transition = 'transform 0.5s ease-in-out';
+    track.style.transform = `translateX(-${index * 100}%)`;
+    currentSlideIndex = index;
+    
+    updateDots(currentSlideIndex);
+}
+
+track.addEventListener('transitionend', () => {
+    isTransitioning = false;
+    if (allSlides[currentSlideIndex].id === 'first-clone') {
+        track.style.transition = 'none';
+        currentSlideIndex = 1;
+        track.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
+    }
+    if (allSlides[currentSlideIndex].id === 'last-clone') {
+        track.style.transition = 'none';
+        currentSlideIndex = allSlides.length - 2;
+        track.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
+    }
+});
+
+nextButton.addEventListener('click', () => {
+    if (currentSlideIndex >= allSlides.length - 1) return;
+    moveToSlide(currentSlideIndex + 1);
+});
+
+prevButton.addEventListener('click', () => {
+    if (currentSlideIndex <= 0) return;
+    moveToSlide(currentSlideIndex - 1);
+});
+
+// Auto advance slides
+setInterval(() => {
+    if (!isTransitioning) {
+        moveToSlide(currentSlideIndex + 1);
+    }
+}, 5000);

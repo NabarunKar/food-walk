@@ -29,7 +29,7 @@
 
         <!-- Countdown Section -->
         <section class="countdown-section">
-            <h2>Adventure Begins In</h2>
+            <h2>Countdown</h2>
             <div id="countdown" class="countdown">
                 <div class="countdown-item glass-panel">
                     <span id="hours" class="countdown-number">00</span>
@@ -46,47 +46,75 @@
             </div>
         </section>
 
-        <!-- Video Section -->
-        <section class="video-section">
-            <h2>Our Route</h2>
+        <!-- Combined Route Section -->
+        <section class="itinerary-section">
+            <h2>Tomorrow's Route</h2>
             <p class="section-description">Follow along our delicious journey through the city</p>
-            <div class="video-container glass-panel">
-                <video id="routeVideo" controls autoplay loop muted playsinline preload="metadata">
-                    <source src="2025-12-29 21-04-06.MOV" type="video/quicktime">
-                    <source src="2025-12-29 21-04-06.MOV.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
+            
+            <div class="route-content-grid">
+                <!-- Itinerary Column (Moved to Left) -->
+                <div class="itinerary-card glass-panel">
+                    <ol class="route-list">
+                        <li>
+                            <span class="stop-name">Dacres</span>
+                        </li>
+                        <li>
+                            <span class="stop-name">JN Barua</span>
+                            <span class="stop-detail">15 min walk from Dacres</span>
+                        </li>
+                        <li>
+                            <span class="stop-name">Metro 🚆 to NoCal</span>
+                        </li>
+                        <li>
+                            <span class="stop-name">Bro’s Kebab</span>
+                            <span class="stop-detail">5 min walk from Shyambazar metro gate #3</span>
+                        </li>
+                        <li>
+                            <span class="stop-name">Kalika</span>
+                            <span class="stop-detail">For sweets, across the street from Bro’s</span>
+                        </li>
+                        <li>
+                            <span class="stop-name">Hot Thai Momo / Bholenath Cabin</span>
+                            <span class="stop-detail">5 min walk from Bro’s</span>
+                        </li>
+                        <li>
+                            <span class="stop-name">Ghaat ey makeout 😽</span>
+                        </li>
+                    </ol>
+                    <div class="bonus-stop">
+                        <span class="bonus-label">Just for joxxxxxx last option:</span>
+                        <span class="bonus-content">DINNER AT GOLBARI 🐐</span>
+                    </div>
+                </div>
+
+                <!-- Video Column (Moved to Right, removed glass-panel) -->
+                <div class="video-container">
+                    <video id="routeVideo" controls autoplay loop muted playsinline preload="metadata">
+                        <source src="2025-12-29 21-04-06.MOV" type="video/quicktime">
+                        <source src="2025-12-29 21-04-06.MOV.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
             </div>
         </section>
 
-        <!-- Journey Details -->
-        <section class="journey-section">
-            <h2>The Experience</h2>
-            <div class="journey-grid">
-                <div class="journey-card glass-panel">
-                    <h3>Multiple Stops</h3>
-                    <p>Exploring the best food spots across the city.</p>
+        <!-- Image Carousel Section -->
+        <section class="carousel-section">
+            <h2>Gallery</h2>
+            <div class="carousel-container glass-panel">
+                <div class="carousel-track">
+                    <div class="carousel-slide"><img src="Resources/1.png" alt="Food Walk Image 1"></div>
+                    <div class="carousel-slide"><img src="Resources/2.png" alt="Food Walk Image 2"></div>
+                    <div class="carousel-slide"><img src="Resources/3.png" alt="Food Walk Image 3"></div>
+                    <div class="carousel-slide"><img src="Resources/4.png" alt="Food Walk Image 4"></div>
+                    <div class="carousel-slide"><img src="Resources/5.png" alt="Food Walk Image 5"></div>
                 </div>
-                <div class="journey-card glass-panel">
-                    <h3>Great Company</h3>
-                    <p>Friends, laughter, and unforgettable moments.</p>
-                </div>
-                <div class="journey-card glass-panel">
-                    <h3>Memories Made</h3>
-                    <p>Capturing every delicious bite and smile.</p>
-                </div>
-                <div class="journey-card glass-panel">
-                    <h3>Pure Fun</h3>
-                    <p>An adventure to remember forever.</p>
-                </div>
+                <button class="carousel-btn prev-btn">❮</button>
+                <button class="carousel-btn next-btn">❯</button>
+                <div class="carousel-dots"></div>
             </div>
         </section>
 
-        <!-- Footer -->
-        <footer class="footer glass-panel">
-            <p>Curated for an unforgettable day.</p>
-            <p class="footer-date">December 30, 2025</p>
-        </footer>
     </div>
 
     <script src="script.js"></script>
